@@ -2,6 +2,11 @@ import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { FilterValuesType } from './App';
 import { AddItemForm } from './AddItemForm';
 import { EditableSpan } from './EditableSpan';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Fingerprint from '@mui/icons-material/Fingerprint';
+// import { Button, IconButton } from '@mui/material';
+// import { Fingerprint } from '@mui/icons-material';
 
 export type TaskType = {
     id: string
@@ -66,8 +71,13 @@ export function Todolist(props: PropsType) {
         <h3>
             {/* {props.title} */}
             <EditableSpan oldTitle={props.title} callBack={updateTodolistHandler} />
-            <button onClick={removeTodolist}>x</button>
+            {/* Подключим materualUI */}
+            <Button variant="contained" onClick={removeTodolist}>X</Button>
+            {/* <button onClick={removeTodolist}>x</button> */}
         </h3>
+        <IconButton aria-label="fingerprint" color="secondary">
+            <Fingerprint />
+        </IconButton>
         <AddItemForm callBack={addTaskHandler} />
         {/* <div>
             <input value={title}
