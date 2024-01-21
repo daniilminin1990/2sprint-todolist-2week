@@ -1,5 +1,5 @@
 
-.App {
+/* .App {
   padding: 30px;
   display: flex;
 }
@@ -22,5 +22,11 @@
 
 .is-done {
   opacity: 0.5;
-}
+} */
 
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+}
