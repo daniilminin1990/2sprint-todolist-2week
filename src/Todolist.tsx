@@ -5,8 +5,6 @@ import { EditableSpan } from './EditableSpan';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Fingerprint from '@mui/icons-material/Fingerprint';
-// import { Button, IconButton } from '@mui/material';
-// import { Fingerprint } from '@mui/icons-material';
 
 export type TaskType = {
     id: string
@@ -29,29 +27,6 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-    // let [title, setTitle] = useState("")
-    // let [error, setError] = useState<string | null>(null)
-
-    // const addTask = () => {
-    //     let newTitle = title.trim();
-    //     if (newTitle !== "") {
-    //         props.addTask(newTitle, props.id);
-    //         setTitle("");
-    //     } else {
-    //         setError("Title is required");
-    //     }
-    // }
-
-    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setTitle(e.currentTarget.value)
-    // }
-
-    // const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    //     setError(null);
-    //     if (e.charCode === 13) {
-    //         addTask();
-    //     }
-    // }
 
     const removeTodolist = () => props.removeTodolist(props.id)
 
@@ -69,25 +44,13 @@ export function Todolist(props: PropsType) {
 
     return <div>
         <h3>
-            {/* {props.title} */}
             <EditableSpan oldTitle={props.title} callBack={updateTodolistHandler} />
-            {/* Подключим materualUI */}
             <Button variant="contained" onClick={removeTodolist}>X</Button>
-            {/* <button onClick={removeTodolist}>x</button> */}
         </h3>
         <IconButton aria-label="fingerprint" color="secondary">
             <Fingerprint />
         </IconButton>
         <AddItemForm callBack={addTaskHandler} />
-        {/* <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
-            />
-            <button onClick={addTask}>+</button>
-            {error && <div className="error-message">{error}</div>}
-        </div> */}
         <ul>
             {
                 props.tasks.map(t => {
