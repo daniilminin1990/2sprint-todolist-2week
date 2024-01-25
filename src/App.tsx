@@ -7,7 +7,7 @@ import ButtonAppBar from './ButtonAppBar';
 import { Container, Grid, Paper } from '@mui/material';
 
 export type FilterValuesType = "all" | "active" | "completed";
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -86,6 +86,17 @@ function App() {
         delete tasks[id]; // удаляем св-во из объекта... значением которого являлся массив тасок
         // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
         setTasks({ ...tasks });
+    }
+
+    //! Чет потерялась где-то. Пишу по новой. А КУДА ЕГО????
+    function changeTodolistTitle(id: string, title: string) {
+        // найдем нужный todolist
+        const todolist = todolists.find(tl => tl.id === id);
+        if (todolist) {
+            // Если нашелся - изменим ему заголовок
+            todolist.title = title;
+            setTodolists([...todolists])
+        }
     }
 
     const addTodoList = (title: string) => {
