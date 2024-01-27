@@ -33,7 +33,6 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-
     const removeTodolist = () => props.removeTodolist(props.id)
 
     const onAllClickHandler = () => props.changeFilter("all", props.id);
