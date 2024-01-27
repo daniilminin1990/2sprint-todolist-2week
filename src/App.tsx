@@ -106,12 +106,27 @@ function App() {
         setTasks({ ...tasks, [todolistId]: [] })
     }
 
-    const updateTask = (todolistId: string, taskId: string, title: string) => {
-        setTasks({ ...tasks, [todolistId]: tasks[todolistId].map(el => el.id === taskId ? { ...el, title } : el) })
+    const updateTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        //достанем нужный массив по todolistId:
+        let todolistTasks = tasks[todolistId];
+        // найдём нужную таску:
+        let task = todolistTasks.find(t => t.id === taskId);
+        //изменим таску, если она нашлась
+        if (task) {
+            task.title = title;
+            // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
+            setTasks({ ...tasks });
+        }
     }
 
-    const updateTodolist = (todolistId: string, title: string) => {
-        setTodolists(todolists.map(el => el.id === todolistId ? { ...el, title } : el))
+    const updateTodolistTitle = (todolistId: string, title: string) => {
+        // найдем нужный todolist
+        const todolist = todolists.find(tl => tl.id === todolistId);
+        if (todolist) {
+            // Если нашелся - изменим ему заголовок
+            todolist.title = title;
+            setTodolists([...todolists])
+        }
     }
 
     return (
@@ -147,8 +162,8 @@ function App() {
                                         changeTaskStatus={changeStatus}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}
-                                        updateTask={updateTask}
-                                        updateTodolist={updateTodolist}
+                                        updateTaskTitle={updateTaskTitle}
+                                        updateTodolistTitle={updateTodolistTitle}
                                     />
                                 </Paper>
                             </Grid>
