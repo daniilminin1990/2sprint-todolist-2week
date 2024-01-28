@@ -88,17 +88,6 @@ function App() {
         setTasks({ ...tasks });
     }
 
-    //! Чет потерялась где-то. Пишу по новой. А КУДА ЕГО????
-    function changeTodolistTitle(id: string, title: string) {
-        // найдем нужный todolist
-        const todolist = todolists.find(tl => tl.id === id);
-        if (todolist) {
-            // Если нашелся - изменим ему заголовок
-            todolist.title = title;
-            setTodolists([...todolists])
-        }
-    }
-
     const addTodoList = (title: string) => {
         const todolistId = v1();
         const newTodo: TodolistType = { id: todolistId, title, filter: "all" }
@@ -111,7 +100,13 @@ function App() {
     }
 
     const updateTodolistTitle = (todolistId: string, title: string) => {
-        setTodolists(todolists.map(el => el.id === todolistId ? { ...el, title } : el))
+        // найдем нужный todolist
+        const todolist = todolists.find(tl => tl.id === todolistId);
+        if (todolist) {
+            // Если нашелся - изменим ему заголовок
+            todolist.title = title;
+            setTodolists([...todolists])
+        }
     }
 
     return (
@@ -134,7 +129,7 @@ function App() {
                                 tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
                             }
 
-                            return <Grid item>
+                            return <Grid item key={tl.id}>
                                 <Paper elevation={6} style={{ padding: '30px' }}>
                                     <Todolist
                                         key={tl.id}

@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Fingerprint from '@mui/icons-material/Fingerprint';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
+import { CheckboxUniversal } from './CheckboxUniversal';
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import { Button, IconButton } from '@mui/material';
 // import { Fingerprint } from '@mui/icons-material';
@@ -47,6 +48,10 @@ export function Todolist(props: PropsType) {
         props.updateTodolistTitle(props.id, title)
     }
 
+    const changeTaskStatusHandler = (tID: string, newTaskStatus: boolean) => {
+        props.changeTaskStatus(tID, newTaskStatus, props.id);
+    }
+
     return <div>
         <h3>
             <EditableSpan oldTitle={props.title} callBack={updateTodolistTitleHandler} />
@@ -62,10 +67,11 @@ export function Todolist(props: PropsType) {
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(t.id, props.id)
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        let newIsDoneValue = e.currentTarget.checked;
-                        props.changeTaskStatus(t.id, newIsDoneValue, props.id);
-                    }
+                    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                    //     let newIsDoneValue = e.currentTarget.checked;
+                    //     props.changeTaskStatus(t.id, newIsDoneValue, props.id);
+                    //     console.log(newIsDoneValue)
+                    // }
 
                     const updateTaskTitleHandler = (title: string) => {
                         props.updateTaskTitle(props.id, t.id, title)
@@ -73,7 +79,8 @@ export function Todolist(props: PropsType) {
 
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                         {/* <input type="checkbox" onChange={onChangeHandler} checked={t.isDone} /> */}
-                        <Checkbox onChange={onChangeHandler} checked={t.isDone} />
+                        {/* <Checkbox onChange={onChangeHandler} checked={t.isDone} /> */}
+                        <CheckboxUniversal callBack={(newTaskStatus) => changeTaskStatusHandler(t.id, newTaskStatus)} checked={t.isDone} />
                         <EditableSpan oldTitle={t.title} callBack={updateTaskTitleHandler} />
                         {/* <span>{t.title}</span> */}
                         {/* <button onClick={onClickHandler}>x</button> */}
