@@ -40,43 +40,48 @@ function App() {
 
 
     function removeTask(id: string, todolistId: string) {
-        //достанем нужный массив по todolistId:
-        let todolistTasks = tasks[todolistId];
-        // перезапишем в этом объекте массив для нужного тудулиста отфилтрованным массивом:
-        tasks[todolistId] = todolistTasks.filter(t => t.id != id);
-        // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-        setTasks({ ...tasks });
+        setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== id) })
+        // //достанем нужный массив по todolistId:
+        // let todolistTasks = tasks[todolistId];
+        // // перезапишем в этом объекте массив для нужного тудулиста отфилтрованным массивом:
+        // tasks[todolistId] = todolistTasks.filter(t => t.id != id);
+        // // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
+        // setTasks({ ...tasks });
     }
 
     function addTask(title: string, todolistId: string) {
         let task = { id: v1(), title: title, isDone: false };
-        //достанем нужный массив по todolistId:
-        let todolistTasks = tasks[todolistId];
-        // перезапишем в этом объекте массив для нужного тудулиста копией, добавив в начало новую таску:
-        tasks[todolistId] = [task, ...todolistTasks];
-        // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-        setTasks({ ...tasks });
+        setTasks({ ...tasks, [todolistId]: [task, ...tasks[todolistId]] })
+        // let task = { id: v1(), title: title, isDone: false };
+        // //достанем нужный массив по todolistId:
+        // let todolistTasks = tasks[todolistId];
+        // // перезапишем в этом объекте массив для нужного тудулиста копией, добавив в начало новую таску:
+        // tasks[todolistId] = [task, ...todolistTasks];
+        // // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
+        // setTasks({ ...tasks });
     }
 
     function changeStatus(id: string, isDone: boolean, todolistId: string) {
-        //достанем нужный массив по todolistId:
-        let todolistTasks = tasks[todolistId];
-        // найдём нужную таску:
-        let task = todolistTasks.find(t => t.id === id);
-        //изменим таску, если она нашлась
-        if (task) {
-            task.isDone = isDone;
-            // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-            setTasks({ ...tasks });
-        }
+        setTasks({ ...tasks, [todolistId]: tasks[todolistId].map(t => t.id === id ? { ...t, isDone } : t) })
+        // //достанем нужный массив по todolistId:
+        // let todolistTasks = tasks[todolistId];
+        // // найдём нужную таску:
+        // let task = todolistTasks.find(t => t.id === id);
+        // //изменим таску, если она нашлась
+        // if (task) {
+        //     task.isDone = isDone;
+        //     // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
+        //     setTasks({ ...tasks });
+        // }
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
-        let todolist = todolists.find(tl => tl.id === todolistId);
-        if (todolist) {
-            todolist.filter = value;
-            setTodolists([...todolists])
-        }
+        setTodolists(todolists.map(tl => tl.id === todolistId ? { ...tl, filter: value } : tl))
+        // let todolist = todolists.find(tl => tl.id === todolistId);
+        // if (todolist) {
+        //     todolist.filter = value;
+        //     setTodolists([...todolists])
+        // }
     }
 
     function removeTodolist(id: string) {
@@ -100,13 +105,14 @@ function App() {
     }
 
     const updateTodolistTitle = (todolistId: string, title: string) => {
-        // найдем нужный todolist
-        const todolist = todolists.find(tl => tl.id === todolistId);
-        if (todolist) {
-            // Если нашелся - изменим ему заголовок
-            todolist.title = title;
-            setTodolists([...todolists])
-        }
+        setTodolists(todolists.map(tl => tl.id === todolistId ? { ...tl, title } : tl))
+        // // найдем нужный todolist
+        // const todolist = todolists.find(tl => tl.id === todolistId);
+        // if (todolist) {
+        //     // Если нашелся - изменим ему заголовок
+        //     todolist.title = title;
+        //     setTodolists([...todolists])
+        // }
     }
 
     return (
